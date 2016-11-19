@@ -13,6 +13,4 @@ type Message {
   mclass: Int
 }
 `];
-
-export const resolvers = {
-};
+export default 'schema';

@@ -5,29 +5,10 @@ import { schema as messageBirdSchema, resolvers as messageBirdResolvers } from '
 
 const rootSchema = [`
 type Query {
-  messages(
-    offset: Int,
-    limit: Int
-  ): [Message]
-
-  message(
-    id: String!
-  ): Message
-}
-type Mutation {
-  sendMessage(
-    payload: String!,
-    originator: String!,
-    recipients: String!
-  ): Message
-}
-type Subscription {
-  messageAdded: Message
+  messages: [Message]
 }
 schema {
   query: Query
-  mutation: Mutation
-  subscription: Subscription
 }
 `];
 
@@ -36,10 +17,6 @@ const rootResolvers = {
     messages(root, args, context) {
       return context.Messages.getMessages();
     },
-  },
-  Mutation: {
-  },
-  Subscription: {
   },
 };
 

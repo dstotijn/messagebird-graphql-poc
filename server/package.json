@@ -10,10 +10,8 @@
   "author": "David Stotijn <david@messagebird.com>",
   "license": "UNLICENSED",
   "dependencies": {
-    "dataloader": "^1.2.0",
     "graphql": "^0.8.2",
     "graphql-server-hapi": "^0.4.3",
-    "graphql-subscriptions": "^0.2.1",
     "graphql-tools": "^0.8.1",
     "hapi": "^15.2.0",
     "lodash": "^4.17.2",
