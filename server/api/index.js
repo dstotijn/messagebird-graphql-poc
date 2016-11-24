@@ -1,4 +1,6 @@
 import hapi from 'hapi';
+import * as basicAuth from 'hapi-auth-basic';
+import inert from 'inert';
 import { graphqlHapi, graphiqlHapi } from 'graphql-server-hapi';
 
 import schema from './schema';
@@ -11,13 +13,23 @@ server.connection({
   port: process.env.PORT || 8000,
 });
 
+server.register(basicAuth, (err) => {
+  if (err) throw err;
+  server.auth.strategy('messageBirdAccessToken', 'basic', true, {
+    validateFunc: (request, username, password, callback) => {
+      callback(null, true, { accessKey: password });
+    },
+    allowEmptyUsername: true,
+  });
+});
+
 server.register({
   register: graphqlHapi,
   options: {
     path: '/graphql',
-    graphqlOptions: () => {
+    graphqlOptions: (request) => {
       const messageBirdConnector = new MessageBirdConnector({
-        accessKey: process.env.MESSAGEBIRD_ACCESS_KEY,
+        accessKey: request.auth.credentials.accessKey,
       });
 
       return {
@@ -39,6 +51,20 @@ server.register({
     },
   },
 });
+
+server.register(inert, (err) => {
+  if (err) throw err;
+  server.route({
+    method: 'GET',
+    path: '/{param*}',
+    handler: {
+      directory: {
+        path: '../client', // This will only work in Docker container
+      },
+    },
+  });
+});
+
 
 server.start((err) => {
   if (err) throw err;

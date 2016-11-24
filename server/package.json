@@ -5,6 +5,7 @@
   "main": "api/index.js",
   "scripts": {
     "start": "nodemon api/index.js --watch api --exec babel-node",
+    "build": "babel api --out-dir build",
     "lint": "eslint api"
   },
   "author": "David Stotijn <david@messagebird.com>",
@@ -14,6 +15,8 @@
     "graphql-server-hapi": "^0.4.3",
     "graphql-tools": "^0.8.1",
     "hapi": "^15.2.0",
+    "hapi-auth-basic": "^4.2.0",
+    "inert": "^4.0.2",
     "lodash": "^4.17.2",
     "request": "^2.78.0",
     "request-promise": "^4.1.1"
